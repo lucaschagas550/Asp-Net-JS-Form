@@ -1,0 +1,247 @@
+﻿@model PedidoViewModel
+
+@{
+    ViewData["Title"] = "Create Pedido";
+}
+
+<!-- Modal para Adicionar Item -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="itemDescricao">Descrição</label>
+                    <input type="text" class="form-control" id="itemDescricao" />
+                    <div class="text-danger" id="itemDescricaoError" style="display:none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="itemQuantidade">Quantidade</label>
+                    <input type="number" class="form-control" id="itemQuantidade" />
+                    <div class="text-danger" id="itemQuantidadeError" style="display:none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="itemPreco">Preço</label>
+                    <input class="form-control money" id="itemPreco"/>
+                    <div class="text-danger" id="itemPrecoError" style="display:none;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveItemButton">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Item -->
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="editItemDescricao">Descrição</label>
+                    <input type="text" class="form-control" id="editItemDescricao" />
+                    <div class="text-danger" id="editItemDescricaoError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editItemQuantidade">Quantidade</label>
+                    <input type="number" class="form-control" id="editItemQuantidade" />
+                    <div class="text-danger" id="editItemQuantidadeError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editItemPreco">Preço</label>
+                    <input class="form-control money" id="editItemPreco"/>
+                    <div class="text-danger" id="editItemPrecoError" style="display:none;"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="updateItemButton">Atualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Create Pedido</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="NomeCliente"></label>
+        <input asp-for="NomeCliente" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DataPedido"></label>
+        <input asp-for="DataPedido" class="form-control" />
+    </div>
+
+    <h3>Itens</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="itens-table">
+            @for (int i = 0; i < Model.Itens.Count; i++)
+            {
+                <tr>
+                    <td><input asp-for="@Model.Itens[i].Descricao" class="form-control" readonly /></td>
+                    <td><input asp-for="@Model.Itens[i].Quantidade" class="form-control" readonly /></td>
+                    <td><input asp-for="@Model.Itens[i].Preco" class="form-control" readonly /></td>
+                    <td>
+                        <button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>
+                        <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal">Adicionar Item</button>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Salvar</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            
+            //Btn de add novo item na tabela
+            $('#saveItemButton').click(function () {
+                var descricao = $('#itemDescricao').val();
+                var quantidade = $('#itemQuantidade').val();
+                var preco = $('#itemPreco').val();
+                var isValid = true;
+
+                if (!descricao) {
+                    $('#itemDescricaoError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#itemDescricaoError').hide();
+                }
+
+                if (!quantidade) {
+                    $('#itemQuantidadeError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#itemQuantidadeError').hide();
+                }
+
+                if (!preco) {
+                    $('#itemPrecoError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#itemPrecoError').hide();
+                }
+
+                if (isValid) {
+                    var index = $('#itens-table tr').length;
+                    var row = '<tr>' +
+                        '<td><input name="Itens[' + index + '].Descricao" class="form-control" value="' + descricao + '" readonly /></td>' +
+                        '<td><input name="Itens[' + index + '].Quantidade" class="form-control" value="' + quantidade + '" readonly /></td>' +
+                        '<td><input name="Itens[' + index + '].Preco" class="form-control" value="' + preco + '" readonly /></td>' +
+                        '<td><button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button> ' +
+                        '<button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button></td>' +
+                        '</tr>';
+                    $('#itens-table').append(row);
+
+                    // Limpar os campos do modal
+                    $('#itemDescricao').val('');
+                    $('#itemQuantidade').val('');
+                    $('#itemPreco').val('');
+
+                    // Fechar o modal e remover o fundo ofuscado
+                    $('#itemModal').modal('hide').on('hidden.bs.modal', function () {
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                    });
+                }
+            });
+
+
+            //Btn atualizar da Modal
+            $('#updateItemButton').click(function () {
+                var descricao = $('#editItemDescricao').val();
+                var quantidade = $('#editItemQuantidade').val();
+                var preco = $('#editItemPreco').val();
+                
+                var isValid = true;
+
+                if (!descricao) {
+                    $('#editItemDescricaoError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#editItemDescricaoError').hide();
+                }
+
+                if (!quantidade) {
+                    $('#editItemQuantidadeError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#editItemQuantidadeError').hide();
+                }
+
+                if (!preco) {
+                    $('#editItemPrecoError').text('Campo obrigatório.').show();
+                    isValid = false;
+                } else {
+                    $('#editItemPrecoError').hide();
+                }
+
+                if (isValid) {
+                    var row = $('#itens-table tr').eq(editingRowIndex);
+                    row.find('input[name$=".Descricao"]').val(descricao);
+                    row.find('input[name$=".Quantidade"]').val(quantidade);
+                    row.find('input[name$=".Preco"]').val(preco);
+
+                    // Fechar o modal e remover o fundo ofuscado
+                    $('#editItemModal').modal('hide').on('hidden.bs.modal', function () {
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                    });
+                }
+            });
+        });
+
+        var editingRowIndex;
+
+        //Chamado ao clicar no botao da tabela para edicao
+        function editItem(button) {
+            var row = $(button).closest('tr');
+            editingRowIndex = row.index();
+
+            console.log($('#editItemPreco').val(row.find('input[name$=".Preco"]').val()));
+
+            $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());
+            $('#editItemQuantidade').val(row.find('input[name$=".Quantidade"]').val());
+            $('#editItemPreco').val(row.find('input[name$=".Preco"]').val());
+            $('#editItemModal').modal('show');
+        }
+
+        function removeItem(button) {
+            $(button).closest('tr').remove();
+        }
+
+    </script>
+}
