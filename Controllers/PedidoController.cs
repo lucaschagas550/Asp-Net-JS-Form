@@ -29,13 +29,16 @@ namespace Forms.Controllers
         {
             return new PedidoViewModel()
             {
-                NomeCliente = "Cliente A",
-                DataPedido = DateTime.Now,
+                Cliente = new ClienteViewModel
+                {
+                    NomeCliente = "Cliente A",
+                    DataPedido = DateTime.Now,
+                },
                 Itens = new List<ItemViewModel>
                 {
                     new ItemViewModel
                     {
-                        Descricao = "Item 1",
+                        Descricao = "Item 1 Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item 1Item 1Item 555555 1Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 5555551Item 555555 5555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 5555555555551Item 5555551Item 5555551Item 5555551Item 555555",
                         Quantidade = 2,
                         Preco = 10.0m,
                         Data = DateTime.Now,
@@ -57,6 +60,12 @@ namespace Forms.Controllers
                         Data = DateTime.Now.AddDays(2),
                         Desconto = false,
                     }
+                },
+                Lojas = new List<LojasDisponiveisViewModel>
+                {
+                    new LojasDisponiveisViewModel("Loja 1","00000-000", 999),
+                    new LojasDisponiveisViewModel("Loja 2","00000-001", 888),
+                    new LojasDisponiveisViewModel("Loja 3","00000-002", 777),
                 }
             };
         }

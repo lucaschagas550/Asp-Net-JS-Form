@@ -8,7 +8,7 @@ namespace Forms.ViewModels
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
 
-        public DateTime Data { get; set; }
+        public DateTime? Data { get; set; }
         public bool Desconto { get; set; }
     }
 }

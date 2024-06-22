@@ -25,6 +25,7 @@ body {
   margin-bottom: 60px;
 }
 
+/*Nao precisa disto se for usar div para exibir os valores da tabela e deixa o input hidden*/
 .readonly-input-center {
   border: none;
   background-color: transparent;
@@ -33,6 +34,7 @@ body {
   text-align: center;
 }
 
+/*Nao precisa disto se for usar div para exibir os valores da tabela e deixa o input hidden*/
 .readonly-input {
     border: none;
     background-color: transparent;
@@ -40,11 +42,14 @@ body {
     pointer-events: none; /* Desativa a intera��o do usu�rio */
 }
 
+/*Nao precisa disto se for usar div para exibir os valores da tabela e deixa o input hidden*/
 .readonly-input:focus {
   outline: none; /* Remove a borda de foco */
 }
 
 
+
+/*Cor do Icones da Tabela*/
 .bi-check-circle {
     color: green;
 }
@@ -53,6 +58,19 @@ body {
     color: red;
 }
 
+
+
+/*Css para quebra a linha da tabela caso texto for grande */
+.max-width-450 {
+    max-width: 450px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+
+
+
+/*Remove Seta do Input para numeros*/
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -66,6 +84,8 @@ input[type="number"] {
 }
 
 
+
+/*Se for usar Div que eh o ideal para ter responsividade nao precisa disto*/
 /* Remove o ícone do calendário apenas dos campos com a classe no-calendar */
 input[type="date"].no-calendar::-webkit-calendar-picker-indicator {
     display: none;

@@ -43,8 +43,8 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="page-container d-flex flex-column min-vh-100">
+        <main role="main" class="flex-grow-1 p-4" style="margin-bottom:150px;">
             @RenderBody()
         </main>
     </div>
@@ -54,6 +54,8 @@
             &copy; 2024 - Forms - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery.mask/jquery.mask.min.js"> </script>
 

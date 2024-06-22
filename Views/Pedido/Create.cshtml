@@ -1,7 +1,7 @@
 ﻿@model PedidoViewModel
 
 @{
-    ViewData["Title"] = "Create Pedido";
+    ViewData["Title"] = "Criar Pedido";
 }
 
 <!-- Modal para Adicionar Item -->
@@ -104,102 +104,106 @@
     </div>
 </div>
 
-<h1>Criar Pedido</h1>
+<h1>@ViewData["Title"] </h1>
 
 <form asp-action="Create" method="post">
-
-    <div class="form-group">
-        <label asp-for="NomeCliente"></label>
-        <input asp-for="NomeCliente" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="DataPedido"></label>
-        <input asp-for="DataPedido" class="form-control" />
-    </div>
-
-    <div class="mt-5">
-        <div class="row">
-            <div class="col-sm-6 text-start">
-                <h3>Itens</h3>
+    <div>
+        <div class="mb-3">
+            <div class="form-group">
+                <label for="NomeCliente">Cliente</label>
+                <input id="NomeCliente" name="Cliente.NomeCliente" value="@Model.Cliente.NomeCliente" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="DataPedido">Data do Pedido</label>
+                <input id="DataPedido" name="Cliente.DataPedido" value="@Model.Cliente.DataPedido.ToString("yyyy-MM-dd")" type="date" class="form-control" />
             </div>
 
-            <div class="col-sm-6 text-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal">
-                    Adicionar Item
-                </button>
+            <div class="mt-5">
+                <div class="row">
+                    <div class="col-sm-6 text-start">
+                        <h3>Itens</h3>
+                    </div>
+                    <div class="col-sm-6 text-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal">
+                            Adicionar Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table text-center table-bordered">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                        <th>Preço </th>
+                        <th>Data</th>
+                        <th>Desconto</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <!--Id da tabela eh usado para JS acrescentar,editar ou remover os itens, alling-middle todo conteudo alinahdo verticalmente-->
+                <tbody id="itens-table" class="align-middle">
+                    @for (int i = 0; i < Model.Itens.Count; i++)
+                    {
+                        @*""Itens"" porque na model eh referente a lista, assim existe o mapeamento*@
+                        <tr>
+                            <td class="max-width-450">
+                                <div class="descricao">@Model.Itens[i].Descricao</div>
+                                <input name="Itens[@i].Descricao" value="@Model.Itens[i].Descricao" class="readonly-input-center" hidden="hidden" />
+                            </td>
+                            <td class="max-width-450">
+                                <div class="quantidade">@Model.Itens[i].Quantidade</div>
+                                <input name="Itens[@i].Quantidade" value="@Model.Itens[i].Quantidade" class="readonly-input-center" hidden="hidden" />
+                            </td>
+                            <td>
+                                <div class="preco">R$ @Model.Itens[i].Preco.ToString("F2")</div>
+                                <input type="text" name="Itens[@i].Preco" value="@Model.Itens[i].Preco" class="readonly-input" hidden="hidden" />
+                            </td>
+                            <td class="max-width-450">
+                                @{
+                                    <!--Valida se a data nao eh null se for nao mostra nada-->
+                                    var formattedDate = Model.Itens[i].Data.HasValue ? Model.Itens[i].Data.Value.ToString("dd/MM/yyyy") : "";
+                                }
+                                <div class="data">@formattedDate</div>
+                                <input name="Itens[@i].Data" value="@Model.Itens[i].Data?.ToString("yyyy-MM-dd")" type="date" class="readonly-input-center no-calendar" hidden="hidden" />
+                            </td>
+                            <td class="max-width-450">
+                                <i class="fs-5 desconto-icon @(Model.Itens[i].Desconto ? "bi bi-check-circle" : "bi bi-x-circle")"></i>
+                                <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input" hidden="hidden"
+                                       value="@(Model.Itens[@i].Desconto ? "true" : "false")" @(Model.Itens[i].Desconto ? "checked" : "") />
+                            </td>
+                            <td class="max-width-450">
+                                <div>
+                                    <button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button>
+                                    <button type="button" class="btn btn-danger mb-2" onclick="removeItem(this)">Remover</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row mt-4">
+            <div class="col-sm-12 text-end">
+                <button type="submit" class="btn btn-success">Salvar</button>
             </div>
         </div>
     </div>
-    <table class="table text-center">
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-                <th>Data</th>
-                <th>Desconto</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="itens-table">
-            @for (int i = 0; i < Model.Itens.Count; i++)
-            {
-                @*""Itens"" porque na model eh referente a lista, assim existe o mapeamento"*@
-                <tr>
-                    <td>
-                        <input name="Itens[@i].Descricao" value="@Model.Itens[i].Descricao" class="readonly-input-center" readonly />
-                    </td>
 
-                    <td>
-                        <input name="Itens[@i].Quantidade" value="@Model.Itens[i].Quantidade" class="readonly-input-center" readonly />
-                    </td>
-
-                    <td>
-                        <div class="row">
-
-                            <div class="col-sm-6 text-end">
-                                <span> R$ </span>
-                            </div>
-                            <div class="col-sm-6 text-start">
-                                <input type="text" name="Itens[@i].Preco" value="@Model.Itens[i].Preco" class="readonly-input" readonly />
-                            </div>
-
-                        </div>
-                    </td>
-
-                    <td>
-                        <input name="Itens[@i].Data" value="@Model.Itens[i].Data.ToString("yyyy-MM-dd")" type="date" class="readonly-input-center no-calendar" />
-                    </td>
-
-                    <td>
-                        <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input" hidden="hidden"
-                               value="@(Model.Itens[@i].Desconto ? "true" : "false")" @(Model.Itens[@i].Desconto ? "checked" : "") />
-                        <i class="fs-5 desconto-icon @(Model.Itens[i].Desconto ? "bi bi-check-circle" : "bi bi-x-circle")"></i>
-                    </td>
-
-                    <td>
-                        <button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>
-                        <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>
-                    </td>
-
-                </tr>
-
-                @* Eh possivel alterar o valor do checkbox mas alem disso vai precisar de outra iteracao no JS para mudar
-            a palavra de Com Desconto para Sem Desconto, o mesmo para um icone por exemplo
-            @{
-            var resultado = Model.Itens[i].Desconto == true ? "Com desconto" : "Sem Desconto";
-            }
-            @resultado *@
-            }
-        </tbody>
-    </table>
-
-    <div class="row mt-4">
-        <div class="col-sm-12 text-end">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </div>
+    <!--Enviar lojas disponiveis como hidden somente ter os registros caso for necessario utilizar caso houver erros na requisicao, assim tera todas as informacoes necessarias-->
+    @for (var i = 0; i < Model.Lojas.Count; i++)
+    {
+        <input name="Lojas[@i].Nome" value="@Model.Lojas[i].Nome" class="readonly-input-center" hidden="hidden" />
+        <input name="Lojas[@i].Cep" value="@Model.Lojas[i].Cep" class="readonly-input-center" hidden="hidden" />
+        <input name="Lojas[@i].Numero" value="@Model.Lojas[i].Numero" class="readonly-input-center" hidden="hidden" />
+    }
 </form>
+
 
 @section Scripts {
     @{
@@ -208,12 +212,30 @@
 
     <script>
 
+        // Função para formatar a data no formato dd/MM/yyyy
+        function formatDateToDDMMYYYY(dateString) {
+            var dateParts = dateString.split("-");
+            var year = parseInt(dateParts[0], 10);
+            var month = parseInt(dateParts[1], 10) - 1; // Meses começam em 0
+            var day = parseInt(dateParts[2], 10);
+
+            var dateObj = new Date(year, month, day);
+
+            return ('0' + dateObj.getDate()).slice(-2) + '/' +
+                ('0' + (dateObj.getMonth() + 1)).slice(-2) + '/' +
+                dateObj.getFullYear();
+        }
+
         $(document).ready(function () {
 
             // Desabilita a digitação nos campos de data, permitindo apenas a seleção via calendário
             $('.date-field').on('keypress keydown keyup', function (e) {
                 e.preventDefault();
             });
+
+
+            //Remove o required do campo de data, permitindo que ele aceite nada, vulgo, null
+            $('#itemData').prop('required', false);
 
             //Btn de add novo item na tabela
             $('#saveItemButton').click(function () {
@@ -248,36 +270,47 @@
 
                 if (isValid) {
                     var index = $('#itens-table tr').length;
+                    var formattedData = null;
+                    var displayData = '';
 
-                    // Formatação da data no formato yyyy-MM-dd
-                    var formattedData = new Date(data).toISOString().split('T')[0];
+                    //Valida se tem valor na data se nao tiver apenas nao mostra nada
+                    if (data) {
+                        formattedData = new Date(data).toISOString().split('T')[0];
+
+                        // Formatação da data no formato dd/MM/yyyy
+                        displayData = formatDateToDDMMYYYY(data);
+                    }
 
                     //Definindo Icone para o checkbox se vai ser True check-circle ou false x-circle)
                     var descontoIconClass = desconto ? 'bi bi-check-circle' : 'bi bi-x-circle';
 
+                    //Montagem da nova linha para a tabela
                     var row = '<tr>' +
-                        '<td>' +
-                        '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" readonly /></td>' +
-                        '<td>' +
-                        '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" readonly /></td>' +
-                        '<td>' +
-                        '<div class="row">' +
-                        '<div class="col-sm-6 text-end">' +
-                        '<span>R$</span>' +
-                        '</div>' +
-                        '<div class="col-sm-6 text-start">' +
-                        '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" readonly />' +
-                        '</div>' +
-                        '</div>' +
-                        '<td>' +
-                        '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" readonly /></td>' +
-                        '<td>' +
-                        '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
-                        '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i>' +
+                        '<td class="max-width-450">' +
+                        '<div class="descricao">' + descricao + '</div>' +
+                        '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>' +
                         '</td>' +
-                        '<td>' +
-                        '<button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>' +
-                        '<button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>' +
+                        '<td class="max-width-450">' +
+                        '<div class="quantidade">' + quantidade + '</div>' +
+                        '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden" />' +
+                        '</td>' +
+                        '<td class="max-width-450">' +
+                        '<div class="preco"> R$ ' + preco + '</div>' +
+                        '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden" />' +
+                        '</td>' +
+                        '<td class="max-width-450">' +
+                        '<div class="data" >' + displayData + '</div>' +
+                        '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden" />' +
+                        '</td>' +
+                        '<td class="max-width-450">' +
+                        '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i>' +
+                        '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
+                        '</td>' +
+                        '<td class="max-width-450">' +
+                        '<div>' +
+                        '<button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button>' +
+                        '<button type="button" class="btn btn-danger mb-2" onclick="removeItem(this)">Remover</button>' +
+                        '</div>' +
                         '</td>' +
                         '</tr>';
 
@@ -295,8 +328,7 @@
                 var preco = $('#editItemPreco').val(); // Substitui vírgula por ponto para conversão
                 var data = $('#editItemData').val();
                 var desconto = $('#editItemDesconto').is(':checked');
-
-                console.log(preco);
+                var displayData = '';
 
                 var isValid = true;
 
@@ -323,6 +355,14 @@
 
                 if (isValid) {
                     var row = $('#itens-table tr').eq(editingRowIndex);
+
+                    //Valida se tem valor na data se nao tiver apenas nao mostra nada
+                    if (data) {
+                        // Formatação da data no formato dd/MM/yyyy
+                        displayData = formatDateToDDMMYYYY(data);
+                    }
+
+                    //Atualiza os valores para os campos inputs que serao enviados para a controller
                     row.find('input[name$=".Descricao"]').val(descricao);
                     row.find('input[name$=".Quantidade"]').val(quantidade);
                     row.find('input[name$=".Preco"]').val(preco);
@@ -341,6 +381,12 @@
                         }
                     }
 
+                    // Atualiza os valores nas divs visíveis na tabela
+                    row.find('div.descricao').text(descricao);
+                    row.find('div.quantidade').text(quantidade);
+                    row.find('div.preco').text('R$ ' + preco);
+                    row.find('div.data').text(displayData);
+
                     // Fechar o modal e remover o fundo ofuscado
                     $('#editItemModal').modal('hide').on('hidden.bs.modal', function () {
                         $('body').removeClass('modal-open');
@@ -356,8 +402,6 @@
         function editItem(button) {
             var row = $(button).closest('tr');
             editingRowIndex = row.index();
-
-            console.log(row.find('input[name$=".Data"]').val());
 
             //Pega o item da linha que tem o name terminando com .* (Alguma coisa exemplo .Data, .Preco, .Quantidade, .Desconto)
             $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());

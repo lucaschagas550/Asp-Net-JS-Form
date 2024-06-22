@@ -1,14 +1,9 @@
-﻿using System.ComponentModel;
-
-namespace Forms.ViewModels
+﻿namespace Forms.ViewModels
 {
     public class PedidoViewModel
     {
-        [DisplayName("Nome do Cliente")]
-        public string NomeCliente { get; set; }
-
-        [DisplayName("Data Pedido")]
-        public DateTime DataPedido { get; set; }
-        public List<ItemViewModel> Itens { get; set; }
+        public ClienteViewModel Cliente { get; set; } = new ClienteViewModel();
+        public List<ItemViewModel> Itens { get; set; } = new List<ItemViewModel>();
+        public List<LojasDisponiveisViewModel> Lojas { get; set; } = new List<LojasDisponiveisViewModel>();
     }
 }
