@@ -47,7 +47,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"onclick="limparValoresModal('itemModal')">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparValoresModal('itemModal')">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="saveItemButton">Salvar</button>
             </div>
         </div>
@@ -149,7 +149,7 @@
                     <td>
                         <input name="Itens[@i].Descricao" value="@Model.Itens[i].Descricao" class="readonly-input-center" readonly />
                     </td>
-                    
+
                     <td>
                         <input name="Itens[@i].Quantidade" value="@Model.Itens[i].Quantidade" class="readonly-input-center" readonly />
                     </td>
@@ -172,11 +172,11 @@
                     </td>
 
                     <td>
-                        <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input"
-                               value="@(Model.Itens[@i].Desconto ? "true" : "false")" @(Model.Itens[@i].Desconto ? "checked" :
-                           "") />
+                        <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input" hidden="hidden"
+                               value="@(Model.Itens[@i].Desconto ? "true" : "false")" @(Model.Itens[@i].Desconto ? "checked" : "") />
+                        <i class="fs-5 desconto-icon @(Model.Itens[i].Desconto ? "bi bi-check-circle" : "bi bi-x-circle")"></i>
                     </td>
-                    
+
                     <td>
                         <button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>
                         <button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>
@@ -223,7 +223,6 @@
                 var data = $('#itemData').val();
                 var desconto = $('#itemDesconto').is(':checked'); // Verifica se o checkbox está marcado
 
-
                 var isValid = true;
 
                 if (!descricao) {
@@ -253,34 +252,38 @@
                     // Formatação da data no formato yyyy-MM-dd
                     var formattedData = new Date(data).toISOString().split('T')[0];
 
+                    //Definindo Icone para o checkbox se vai ser True check-circle ou false x-circle)
+                    var descontoIconClass = desconto ? 'bi bi-check-circle' : 'bi bi-x-circle';
+
                     var row = '<tr>' +
                         '<td>' +
-                            '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" readonly /></td>' +
-                        '<td>' + 
-                            '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" readonly /></td>' +
+                        '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" readonly /></td>' +
                         '<td>' +
-                            '<div class="row">' +
-                                '<div class="col-sm-6 text-end">' +
-                                    '<span>R$</span>' +
-                                '</div>' +
-                                '<div class="col-sm-6 text-start">' +
-                                    '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" readonly />' +
-                                '</div>' +
-                            '</div>' +
-                        '<td>' + 
-                            '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" readonly /></td>' +
+                        '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" readonly /></td>' +
                         '<td>' +
-                            '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input-center no-calendar" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
+                        '<div class="row">' +
+                        '<div class="col-sm-6 text-end">' +
+                        '<span>R$</span>' +
+                        '</div>' +
+                        '<div class="col-sm-6 text-start">' +
+                        '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" readonly />' +
+                        '</div>' +
+                        '</div>' +
+                        '<td>' +
+                        '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" readonly /></td>' +
+                        '<td>' +
+                        '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
+                        '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i>' +
                         '</td>' +
-                        '<td>' + 
-                            '<button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>' +
-                            '<button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>'+
+                        '<td>' +
+                        '<button type="button" class="btn btn-warning" onclick="editItem(this)">Editar</button>' +
+                        '<button type="button" class="btn btn-danger" onclick="removeItem(this)">Remover</button>' +
                         '</td>' +
                         '</tr>';
 
                     $('#itens-table').append(row);
 
-                     // Fechar o modal
+                    // Fechar o modal
                     $('#closeModalButton').click();
                 }
             });
@@ -329,6 +332,13 @@
                     if (checkbox.length > 0) {
                         checkbox.prop('checked', desconto);
                         checkbox.val(desconto ? 'true' : 'false'); // Atualiza o valor do checkbox baseado no estado
+
+                        var icon = row.find('.desconto-icon');
+                        if (desconto) {
+                            icon.removeClass('bi-x-circle').addClass('bi-check-circle');
+                        } else {
+                            icon.removeClass('bi-check-circle').addClass('bi-x-circle');
+                        }
                     }
 
                     // Fechar o modal e remover o fundo ofuscado
