@@ -1,0 +1,25 @@
+﻿@{
+    if (TempData["ListaErrosApi"] is List<string> mensagensErro && mensagensErro.Any())
+    {
+
+        <div style="padding-top: 15px;"></div>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div>
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <span class="fw-bold" id="msgRetorno" style="padding-top: 20px">Por favor, corrija os seguintes erros:</span>
+            </div>
+
+            <ul>
+                @{
+                    foreach (var erro in mensagensErro)
+                    {
+                        <li>@erro</li>
+                    }
+                }
+
+            </ul>
+        </div>
+    }
+}

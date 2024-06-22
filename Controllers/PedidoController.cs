@@ -22,6 +22,14 @@ namespace Forms.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(PedidoViewModel viewModel)
         {
+            viewModel.ErrosApi.Erros.Add("deu erro 1");
+            viewModel.ErrosApi.Erros.Add("deu erro 2");
+            viewModel.ErrosApi.Erros.Add("deu erro 3");
+            viewModel.ErrosApi.Erros.Add("deu erro 4");
+            viewModel.ErrosApi.Erros.Add("deu erro 5");
+
+            TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+
             return View(viewModel);
         }
 
