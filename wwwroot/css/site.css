@@ -8,7 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -19,4 +23,49 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.readonly-input-center {
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  pointer-events: none; /* Desativa a intera��o do usu�rio */
+  text-align: center;
+}
+
+.readonly-input {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    pointer-events: none; /* Desativa a intera��o do usu�rio */
+}
+
+.readonly-input:focus {
+  outline: none; /* Remove a borda de foco */
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+
+/* Remove o ícone do calendário apenas dos campos com a classe no-calendar */
+input[type="date"].no-calendar::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+input[type="date"].no-calendar::-webkit-inner-spin-button {
+    display: none;
+}
+
+input[type="date"].no-calendar::-webkit-clear-button {
+    display: none;
 }
