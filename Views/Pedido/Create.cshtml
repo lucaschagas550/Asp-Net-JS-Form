@@ -7,7 +7,7 @@
 <vc:error-summary></vc:error-summary>
 
 <!-- Modal para Adicionar Item -->
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,8 +57,7 @@
 </div>
 
 <!-- Modal para Editar Item -->
-<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -100,7 +99,27 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="updateItemButton">Atualizar</button>
+                <button type="button" class="btn btn-primary" id="confirmUpdateButton">Atualizar</button>
+                <!--Sem a mensagem de confirmacao apenas basta add o id => id="updateItemButton"-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Edicao Confirmacao-->
+<div class="modal" tabindex="-1" id="editConfirmacao" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atenção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja Alterar o item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editItemModal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateItemButton">Save changes</button>
             </div>
         </div>
     </div>
@@ -166,7 +185,7 @@
                             </td>
                             <td class="max-width-450">
                                 @{
-                                    <!--Valida se a data nao eh null se for nao mostra nada-->
+                                        <!--Valida se a data nao eh null se for nao mostra nada-->
                                     var formattedDate = Model.Itens[i].Data.HasValue ? Model.Itens[i].Data.Value.ToString("dd/MM/yyyy") : "";
                                 }
                                 <div class="data">@formattedDate</div>
@@ -229,6 +248,11 @@
         }
 
         $(document).ready(function () {
+
+            $('#confirmUpdateButton').click(function () {
+                $('#editItemModal').modal('hide');
+                $('#editConfirmacao').modal('show');
+            });
 
             // Desabilita a digitação nos campos de data, permitindo apenas a seleção via calendário
             $('.date-field').on('keypress keydown keyup', function (e) {
@@ -334,6 +358,7 @@
 
                 var isValid = true;
 
+                //Eh possivel realizar validacoes nos campos da modal quando clicado o botao de finalizar
                 if (!descricao) {
                     $('#editItemDescricaoError').text('Campo obrigatório.').show();
                     isValid = false;
@@ -389,8 +414,14 @@
                     row.find('div.preco').text('R$ ' + preco);
                     row.find('div.data').text(displayData);
 
-                    // Fechar o modal e remover o fundo ofuscado
-                    $('#editItemModal').modal('hide').on('hidden.bs.modal', function () {
+                    // Fechar o modal e remover o fundo ofuscado da edicao
+                    // $('#editItemModal').modal('hide').on('hidden.bs.modal', function () {
+                    //     $('body').removeClass('modal-open');
+                    //     $('.modal-backdrop').remove();
+                    // });
+
+                    // Fechar o modal e remover o fundo ofuscado da confirmacao da edicao
+                    $('#editConfirmacao').modal('hide').on('hidden.bs.modal', function () {
                         $('body').removeClass('modal-open');
                         $('.modal-backdrop').remove();
                     });
@@ -408,7 +439,12 @@
             //Pega o item da linha que tem o name terminando com .* (Alguma coisa exemplo .Data, .Preco, .Quantidade, .Desconto)
             $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());
             $('#editItemQuantidade').val(row.find('input[name$=".Quantidade"]').val());
-            $('#editItemPreco').val(row.find('input[name$=".Preco"]').val());
+
+            // Formata o preço para o padrão brasileiro
+            var preco = parseFloat(row.find('input[name$=".Preco"]').val()).toFixed(2);
+            var precoFormatado = parseFloat(preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            $('#editItemPreco').val(precoFormatado);
             $('#editItemData').val(row.find('input[name$=".Data"]').val());
 
             var checkbox = row.find('input[name$=".Desconto"]');
