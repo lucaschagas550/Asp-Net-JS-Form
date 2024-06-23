@@ -98,3 +98,16 @@ input[type="date"].no-calendar::-webkit-inner-spin-button {
 input[type="date"].no-calendar::-webkit-clear-button {
     display: none;
 }
+
+
+
+/* DATATABLES paginacao ajuste no css */
+div.dt-container .dt-paging .dt-paging-button {
+    padding: 0 !important;
+    margin-left: 0 !important;
+}
+
+/*Para alterar cor da coluna*/
+.colorir{
+    background-color: cornflowerblue !important;
+}

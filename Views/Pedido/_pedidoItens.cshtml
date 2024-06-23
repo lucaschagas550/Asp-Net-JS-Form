@@ -24,16 +24,18 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table text-center table-bordered">
+            @* <div class="table-responsive"> *@ @*Caso nao precisar usar Datatables usar esta DIV se nao usar a abaixo*@
+            <div class="table-responsive-md">
+                <table id="tabelaItens" class="table text-center table-bordered mt-5" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Descrição</th>
-                            <th>Quantidade</th>
-                            <th>Preço </th>
-                            <th>Data</th>
-                            <th>Desconto</th>
-                            <th>Ações</th>
+                            @*DATABLES precisa centralizar o HEAD *@
+                            <th class="text-center colorir">Descrição</th>
+                            <th class="text-center">Quantidade</th>
+                            <th class="text-center">Preço </th>
+                            <th class="text-center">Data</th>
+                            <th class="text-center">Desconto</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <!--Id da tabela eh usado para JS acrescentar,editar ou remover os itens, alling-middle todo conteudo alinahdo verticalmente-->

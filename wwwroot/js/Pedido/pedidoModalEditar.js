@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
 
-    //Esconde primeira modal de edicao, e chama a de confirmacao
+    //Esconde primeira modal de edicao, e chama a de confirmacao, se caso tiver validacoes elas devem acontecer aqui neste metodo, nao no abaixo, porque a modal de mensagem sera chamada sem validar
     $('#confirmUpdateButton').click(function () {
         $('#editItemModal').modal('hide');
         $('#editConfirmacao').modal('show');
@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     //Btn atualizar da Modal
     $('#updateItemButton').click(function () {
+
         var descricao = $('#editItemDescricao').val();
         var quantidade = $('#editItemQuantidade').val();
         var preco = $('#editItemPreco').val();
@@ -80,6 +81,13 @@ $(document).ready(function () {
             //     $('body').removeClass('modal-open');
             //     $('.modal-backdrop').remove();
             // });
+
+
+            // Obter a instância do DataTables
+            var table = $('#tabelaItens').DataTable();
+
+            // Atualiza a tabela DataTables
+            table.row(editingRowIndex).invalidate().draw(); //SOMENTE SE TIVER DATATABLES
 
             // Fechar o modal e remover o fundo ofuscado da confirmacao da edicao
             $('#editConfirmacao').modal('hide').on('hidden.bs.modal', function () {

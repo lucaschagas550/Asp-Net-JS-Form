@@ -15,7 +15,7 @@
 <h1>@ViewData["Title"] </h1>
 
 <!--Formualrio de envio-->
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" onsubmit="clearSearchAndSubmit()">
 
     <div class="accordion mt-5" id="accordionExample">
         

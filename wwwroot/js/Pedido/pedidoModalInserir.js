@@ -50,37 +50,53 @@
             //Definindo Icone para o checkbox se vai ser True check-circle ou false x-circle)
             var descontoIconClass = desconto ? 'bi bi-check-circle' : 'bi bi-x-circle';
 
-            //Montagem da nova linha para a tabela
-            var row = '<tr>' +
-                '<td class="max-width-450">' +
-                    '<div class="descricao">' + descricao + '</div>' +
-                    '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>' +
-                '</td>' +
-                '<td class="max-width-450">' +
-                    '<div class="quantidade">' + quantidade + '</div>' +
-                    '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden" />' +
-                '</td>' +
-                    '<td class="max-width-450">' +
-                    '<div class="preco"> R$ ' + preco + '</div>' +
-                    '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden" />' +
-                '</td>' +
-                    '<td class="max-width-450">' +
-                    '<div class="data" >' + displayData + '</div>' +
-                    '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden" />' +
-                '</td>' +
-                '<td class="max-width-450">' +
-                    '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i>' +
-                    '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
-                '</td>' +
-                '<td class="max-width-450">' +
-                    '<div>' +
-                        '<button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button>' +
-                        '<button type="button" class="btn btn-danger mb-2" onclick="removeItem(this)">Remover</button>' +
-                    '</div>' +
-                '</td>' +
-                '</tr>';
+            //Montagem da nova linha para a tabela SEM DATATABLES
+            //var row = '<tr>' +
+            //    '<td class="max-width-450">' +
+            //        '<div class="descricao">' + descricao + '</div>' +
+            //        '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>' +
+            //    '</td>' +
+            //    '<td class="max-width-450">' +
+            //        '<div class="quantidade">' + quantidade + '</div>' +
+            //        '<input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden" />' +
+            //    '</td>' +
+            //        '<td class="max-width-450">' +
+            //        '<div class="preco"> R$ ' + preco + '</div>' +
+            //        '<input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden" />' +
+            //    '</td>' +
+            //        '<td class="max-width-450">' +
+            //        '<div class="data" >' + displayData + '</div>' +
+            //        '<input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden" />' +
+            //    '</td>' +
+            //    '<td class="max-width-450">' +
+            //        '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i>' +
+            //        '<input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + ' />' +
+            //    '</td>' +
+            //    '<td class="max-width-450">' +
+            //        '<div>' +
+            //            '<button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button>' +
+            //            '<button type="button" class="btn btn-danger mb-2" onclick="removeItem(this)">Remover</button>' +
+            //        '</div>' +
+            //    '</td>' +
+            //    '</tr>';
 
-            $('#itens-table').append(row);
+            //$('#itens-table').append(row); //SOMENTE
+
+
+            // Montagem da nova linha para a tabela COM DATATABLES, tem que colocar todo conteudo do TD de uma unica linha
+            var newRow = [
+                '<div class="descricao">' + descricao + '</div><input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>',
+                '<div class="quantidade">' + quantidade + '</div><input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden"/>',
+                '<div class="preco"> R$ ' + preco + '</div><input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden"/>',
+                '<div class="data">' + displayData + '</div><input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden"/>',
+                '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i><input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + '/>',
+                '<div><button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button><button type="button" class="btn btn-danger mb-2" onclick="confirmDelete(this)">Remover</button></div>'
+            ];
+
+            console.log('ADD NOVA LINHA');
+            // Adicionar a nova linha à tabela DataTables
+            var table = $('#tabelaItens').DataTable();
+            table.row.add(newRow).draw(false); // False redesenha a tabela garantido que os valores aparecem
 
             // Fechar o modal
             $('#closeModalButton').click();

@@ -67,7 +67,7 @@ namespace Forms.Controllers
                         Preco = 65.65m,
                         Data = DateTime.Now.AddDays(2),
                         Desconto = false,
-                    }
+                    },
                 },
                 Lojas = new List<LojasDisponiveisViewModel>
                 {
