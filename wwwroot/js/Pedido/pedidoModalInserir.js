@@ -87,16 +87,3 @@
         }
     });
 });
-
-//function formatDateToDDMMYYYY(dateString) {
-//    var dateParts = dateString.split("-");
-//    var year = parseInt(dateParts[0], 10);
-//    var month = parseInt(dateParts[1], 10) - 1; // Meses começam em 0
-//    var day = parseInt(dateParts[2], 10);
-
-//    var dateObj = new Date(year, month, day);
-
-//    return ('0' + dateObj.getDate()).slice(-2) + '/' +
-//        ('0' + (dateObj.getMonth() + 1)).slice(-2) + '/' +
-//        dateObj.getFullYear();
-//}

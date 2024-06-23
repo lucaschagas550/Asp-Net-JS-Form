@@ -2,8 +2,6 @@
 
 $(document).ready(function () {
 
-    //Add a remocao da data como obrigatorio no update tbm
-
     //Esconde primeira modal de edicao, e chama a de confirmacao
     $('#confirmUpdateButton').click(function () {
         $('#editItemModal').modal('hide');
@@ -14,7 +12,7 @@ $(document).ready(function () {
     $('#updateItemButton').click(function () {
         var descricao = $('#editItemDescricao').val();
         var quantidade = $('#editItemQuantidade').val();
-        var preco = $('#editItemPreco').val(); // Substitui vírgula por ponto para conversão
+        var preco = $('#editItemPreco').val();
         var data = $('#editItemData').val();
         var desconto = $('#editItemDesconto').is(':checked');
         var displayData = '';
@@ -103,7 +101,7 @@ function editItem(button) {
     $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());
     $('#editItemQuantidade').val(row.find('input[name$=".Quantidade"]').val());
 
-    // Formatação do preço para o padrão brasileiro
+    // Formatação do preço para o padrão brasileiro para exibir na tabela
     var preco = row.find('input[name$=".Preco"]').val();
     var precoNumerico = parseFloat(preco.replace(/\./g, '').replace(',', '.'));
     var precoFormatado = precoNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -121,17 +119,3 @@ function editItem(button) {
 
     $('#editItemModal').modal('show');
 }
-
-// Função para formatar a data no formato dd/MM/yyyy
-//function formatDateToDDMMYYYY(dateString) {
-//    var dateParts = dateString.split("-");
-//    var year = parseInt(dateParts[0], 10);
-//    var month = parseInt(dateParts[1], 10) - 1; // Meses começam em 0
-//    var day = parseInt(dateParts[2], 10);
-
-//    var dateObj = new Date(year, month, day);
-
-//    return ('0' + dateObj.getDate()).slice(-2) + '/' +
-//        ('0' + (dateObj.getMonth() + 1)).slice(-2) + '/' +
-//        dateObj.getFullYear();
-//}
