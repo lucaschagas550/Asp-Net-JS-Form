@@ -32,8 +32,9 @@
                             @*DATABLES precisa centralizar o HEAD *@
                             <th class="text-center colorir">Descrição</th>
                             <th class="text-center">Quantidade</th>
-                            <th class="text-center">Preço </th>
+                            <th class="text-center">Preço</th>
                             <th class="text-center">Data</th>
+                            @*Caso precisar do valor para modal e nao na tabela basta add hidden="hidden" na coluna e no cabecalho*@
                             <th class="text-center">Desconto</th>
                             <th class="text-center">Ações</th>
                         </tr>
@@ -52,6 +53,7 @@
                                     <div class="quantidade">@Model.Itens[i].Quantidade</div>
                                     <input name="Itens[@i].Quantidade" value="@Model.Itens[i].Quantidade" class="readonly-input-center" hidden="hidden" />
                                 </td>
+                                @*Caso precisar do valor para modal e nao na tabela basta add hidden="hidden" na coluna e no cabecalho*@
                                 <td>
                                     <div class="preco">R$ @Model.Itens[i].Preco.ToString("N2")</div>
                                     <input type="text" name="Itens[@i].Preco" value="@Model.Itens[i].Preco" class="readonly-input" hidden="hidden" />
@@ -64,6 +66,7 @@
                                     <div class="data">@formattedDate</div>
                                     <input name="Itens[@i].Data" value="@Model.Itens[i].Data?.ToString("yyyy-MM-dd")" type="date" class="readonly-input-center no-calendar" hidden="hidden" />
                                 </td>
+                                @*Caso precisar do valor para modal e nao na tabela basta add hidden="hidden" na coluna e no cabecalho*@
                                 <td class="max-width-450">
                                     <i class="fs-5 desconto-icon @(Model.Itens[i].Desconto ? "bi bi-check-circle" : "bi bi-x-circle")"></i>
                                     <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input" hidden="hidden"
