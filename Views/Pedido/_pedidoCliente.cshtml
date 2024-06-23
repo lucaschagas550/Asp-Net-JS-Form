@@ -1,0 +1,25 @@
+﻿@model PedidoViewModel
+
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#primeiroAccordion" aria-expanded="false" aria-controls="primeiroAccordion">
+            Cliente
+        </button>
+    </h2>
+    <div id="primeiroAccordion" class="accordion-collapse collapse">
+        <div class="accordion-body">
+
+            <div class="mb-3">
+                <div class="form-group">
+                    <label for="NomeCliente">Cliente</label>
+                    <input id="NomeCliente" name="Cliente.NomeCliente" value="@Model.Cliente.NomeCliente" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="DataPedido">Data do Pedido</label>
+                    <input id="DataPedido" name="Cliente.DataPedido" value="@Model.Cliente.DataPedido.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

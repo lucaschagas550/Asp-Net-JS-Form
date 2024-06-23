@@ -1,0 +1,49 @@
+﻿<!-- Modal para Inserir Item -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Item</h1>
+                <button id="closeModalButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="limparValoresModal('itemModal')"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="itemDescricao">Descrição</label>
+                    <input type="text" class="form-control" id="itemDescricao" />
+                    <div class="text-danger" id="itemDescricaoError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemQuantidade">Quantidade</label>
+                    <input type="number" class="form-control" id="itemQuantidade" />
+                    <div class="text-danger" id="itemQuantidadeError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemPreco">Preço</label>
+                    <input class="form-control money" id="itemPreco" />
+                    <div class="text-danger" id="itemPrecoError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="itemData">Data</label>
+                    <input class="form-control date-field" type="date" id="itemData" />
+                    <div class="text-danger" id="itemDataError" style="display:none;"></div>
+                </div>
+
+                <div class="form-check">
+                    <label class="form-check-label" for="itemDesconto">Desconto</label>
+                    <input class="form-check-input" type="checkbox" id="itemDesconto" />
+                    <div class="text-danger" id="itemDataDescontoError" style="display:none;"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparValoresModal('itemModal')">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveItemButton">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

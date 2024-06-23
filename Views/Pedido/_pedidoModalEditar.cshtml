@@ -1,0 +1,78 @@
+﻿<!-- Modal para Editar Item -->
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="editItemDescricao">Descrição</label>
+                    <input type="text" class="form-control" id="editItemDescricao" />
+                    <div class="text-danger" id="editItemDescricaoError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editItemQuantidade">Quantidade</label>
+                    <input type="number" class="form-control" id="editItemQuantidade" />
+                    <div class="text-danger" id="editItemQuantidadeError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editItemPreco">Preço</label>
+                    <input class="form-control money" id="editItemPreco" />
+                    <div class="text-danger" id="editItemPrecoError" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editItemData">Data</label>
+                    <input class="form-control date-field" type="date" id="editItemData" />
+                    <div class="text-danger" id="editItemDataError" style="display:none;"></div>
+                </div>
+
+                <div class="form-check">
+                    <label class="form-check-label" for="editItemDesconto">Desconto</label>
+                    <input class="form-check-input" type="checkbox" id="editItemDesconto" />
+                    <div class="text-danger" id="editItemDescontoError" style="display:none;"></div>
+                </div>
+
+            </div>
+
+            <!--Botoes centralizado na Modal display:block-->
+            <div class="modal-footer" style="display:block">
+                <div class="row">
+                    <div class="col-md-6 text-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" id="confirmUpdateButton">Atualizar</button>
+                    </div>
+
+                </div>
+                <!--Sem a mensagem de confirmacao apenas basta add o id => id="updateItemButton"-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Modal Edicao Confirmacao-->
+<div class="modal" tabindex="-1" id="editConfirmacao" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atenção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja Alterar o item?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editItemModal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateItemButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

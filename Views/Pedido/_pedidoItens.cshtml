@@ -1,0 +1,88 @@
+﻿@model PedidoViewModel
+
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#segundoAccordion" aria-expanded="false" aria-controls="segundoAccordion">
+            Tabela Pedidos
+        </button>
+    </h2>
+    <div id="segundoAccordion" class="accordion-collapse collapse">
+        <div class="accordion-body">
+
+            <div>
+                <div class="mt-5 mb-4">
+                    <div class="row">
+                        <div class="col-sm-6 text-start">
+                            <h3>Itens</h3>
+                        </div>
+                        <div class="col-sm-6 text-end">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                Adicionar Item
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Preço </th>
+                            <th>Data</th>
+                            <th>Desconto</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <!--Id da tabela eh usado para JS acrescentar,editar ou remover os itens, alling-middle todo conteudo alinahdo verticalmente-->
+                    <tbody id="itens-table" class="align-middle">
+                        @for (int i = 0; i < Model.Itens.Count; i++)
+                        {
+                            @*""Itens"" porque na model eh referente a lista, assim existe o mapeamento*@
+                            <tr>
+                                <td class="max-width-450">
+                                    <div class="descricao">@Model.Itens[i].Descricao</div>
+                                    <input name="Itens[@i].Descricao" value="@Model.Itens[i].Descricao" class="readonly-input-center" hidden="hidden" />
+                                </td>
+                                <td class="max-width-450">
+                                    <div class="quantidade">@Model.Itens[i].Quantidade</div>
+                                    <input name="Itens[@i].Quantidade" value="@Model.Itens[i].Quantidade" class="readonly-input-center" hidden="hidden" />
+                                </td>
+                                <td>
+                                    <div class="preco">R$ @Model.Itens[i].Preco.ToString("N2")</div>
+                                    <input type="text" name="Itens[@i].Preco" value="@Model.Itens[i].Preco" class="readonly-input" hidden="hidden" />
+                                </td>
+                                <td class="max-width-450">
+                                    @{
+                                        <!--Valida se a data nao eh null se for nao mostra nada-->
+                                        var formattedDate = Model.Itens[i].Data.HasValue ? Model.Itens[i].Data.Value.ToString("dd/MM/yyyy") : "";
+                                    }
+                                    <div class="data">@formattedDate</div>
+                                    <input name="Itens[@i].Data" value="@Model.Itens[i].Data?.ToString("yyyy-MM-dd")" type="date" class="readonly-input-center no-calendar" hidden="hidden" />
+                                </td>
+                                <td class="max-width-450">
+                                    <i class="fs-5 desconto-icon @(Model.Itens[i].Desconto ? "bi bi-check-circle" : "bi bi-x-circle")"></i>
+                                    <input name="Itens[@i].Desconto" type="checkbox" class="readonly-input" hidden="hidden"
+                                           value="@(Model.Itens[@i].Desconto ? "true" : "false")" @(Model.Itens[i].Desconto ? "checked" : "") />
+                                </td>
+                                <td class="max-width-450">
+                                    <div>
+                                        <button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button>
+                                        <button type="button" class="btn btn-danger mb-2" onclick="confirmDelete(this)">Remover</button>
+
+                                        <!--para remover direto sem mensagem de confirmacao basta o event onclick="removeItem(this)"-->
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
