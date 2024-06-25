@@ -21,6 +21,9 @@ $(document).ready(function () {
         var isValid = true;
 
         //Eh possivel realizar validacoes nos campos da modal quando clicado o botao de finalizar
+        //MENSAGENS EH PORTUGUES SAO VAO FUNCIONAR SE TU SALVAR EM UTF-8 O ARQUIVO
+        //FILE => SAVE pedidoModalEditar.js AS => NO BOTAO SAVE TEM UM SETA PARA BAIXO, "SAVE WITH ENCODING", ESCOLHER UTF-8
+        //link de referencia => https://stackoverflow.com/questions/42158277/seperate-js-file-utf-8-not-working-in-asp-net-mvc-razor
         if (!descricao) {
             $('#editItemDescricaoError').text('Campo obrigatório.').show();
             isValid = false;

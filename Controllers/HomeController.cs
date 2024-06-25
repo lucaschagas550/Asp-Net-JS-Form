@@ -15,6 +15,9 @@ namespace Forms.Controllers
 
         public IActionResult Index()
         {
+            var data = DateTime.Now;
+            var teste = data.Day;
+            Console.WriteLine(teste);
             return View();
         }
 

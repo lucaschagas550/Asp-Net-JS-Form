@@ -18,14 +18,17 @@
 <form asp-action="Create" method="post" onsubmit="clearSearchAndSubmit()">
 
     <div class="accordion mt-5" id="accordionExample">
-        
+
         <!--Accordions-->
+        <!--Primeiro accordion de cliente-->
         <partial name="_pedidoCliente" model="Model"></partial>
+        
+        <!--Segundo accordion de pedido-->
         <partial name="_pedidoItens" model="Model"></partial>
 
     </div>
 
-    <!--Enviar lojas disponiveis como hidden somente ter os registros caso for necessario utilizar caso houver erros na requisicao, assim tera todas as informacoes necessarias-->
+    <!--Enviar lojas disponiveis como hidden somente para ter os registros caso for necessario utilizar caso houver erros na requisicao, assim tera todas as informacoes necessarias-->
     @for (var i = 0; i < Model.Lojas.Count; i++)
     {
         <input name="Lojas[@i].Nome" value="@Model.Lojas[i].Nome" class="readonly-input-center" hidden="hidden" />
