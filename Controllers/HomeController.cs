@@ -15,6 +15,7 @@ namespace Forms.Controllers
 
         public IActionResult Index()
         {
+            var negativo = -10.20m;
             var data = DateTime.Now;
             var teste = data.Day;
             Console.WriteLine(teste);

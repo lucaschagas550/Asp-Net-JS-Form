@@ -20,17 +20,26 @@ namespace Forms.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PedidoViewModel viewModel)
+        public async Task<IActionResult> Create(PedidoViewModel viewModel)
         {
-            viewModel.ErrosApi.Erros.Add("deu erro 1");
-            viewModel.ErrosApi.Erros.Add("deu erro 2");
-            viewModel.ErrosApi.Erros.Add("deu erro 3");
-            viewModel.ErrosApi.Erros.Add("deu erro 4");
-            viewModel.ErrosApi.Erros.Add("deu erro 5");
+            try
+            {
+                await Task.Delay(5000).ConfigureAwait(false);
 
-            TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+                viewModel.ErrosApi.Erros.Add("deu erro 1");
+                viewModel.ErrosApi.Erros.Add("deu erro 2");
+                viewModel.ErrosApi.Erros.Add("deu erro 3");
+                viewModel.ErrosApi.Erros.Add("deu erro 4");
+                viewModel.ErrosApi.Erros.Add("deu erro 5");
 
-            return View(viewModel);
+                TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                return View(viewModel);
+            }
         }
 
         private static PedidoViewModel CriarPedidos()
