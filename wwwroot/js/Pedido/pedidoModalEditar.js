@@ -108,6 +108,8 @@ function editItem(button) {
     var row = $(button).closest('tr');
     editingRowIndex = row.index();
 
+    console.log(valorDaViewModel);
+
     //Pega o item da linha que tem o name terminando com .* (Alguma coisa exemplo .Data, .Preco, .Quantidade, .Desconto)
     $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());
     $('#editItemQuantidade').val(row.find('input[name$=".Quantidade"]').val());

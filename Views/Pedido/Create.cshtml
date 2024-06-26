@@ -62,4 +62,17 @@
     <script src="~/js/Pedido/pedidoModalInserir.js"></script>
     <script src="~/js/Pedido/pedidoModalEditar.js"></script>
     <script src="~/js/Pedido/pedidoModalRemover.js"></script>
+
+    @*O razor so consegue pegar valores da Model para armazena em variavel se estiver no mesmo arquivo*@
+    <script type="text/javascript">
+
+        //Consigo usar sua variavel em outro arquivo JS o valorDaViewModel pode ser usado no pedidoModalEditar por exemplo
+        var valorDaViewModel;
+
+        $(document).ready(function () {
+            valorDaViewModel = '@Model.Cliente.NomeCliente';
+            // Agora você pode usar valorDaViewModel em seu script
+            console.log(valorDaViewModel);
+        });
+    </script>
 }
