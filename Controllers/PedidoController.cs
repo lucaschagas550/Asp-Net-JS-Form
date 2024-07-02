@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Forms.Controllers
 {
+    [Route("[controller]")]
     public class PedidoController : Controller
     {
         public PedidoController()
@@ -10,7 +11,7 @@ namespace Forms.Controllers
 
         }
 
-
+        [HttpGet("create")]
         public IActionResult Create()
         {
             var pedidos = CriarPedidos();
@@ -18,7 +19,7 @@ namespace Forms.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PedidoViewModel viewModel)
         {
@@ -39,6 +40,30 @@ namespace Forms.Controllers
             catch (Exception ex)
             {
                 return View(viewModel);
+            }
+        }
+
+        [HttpPost("update")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(PedidoViewModel viewModel)
+        {
+            try
+            {
+                await Task.Delay(5000).ConfigureAwait(false);
+
+                viewModel.ErrosApi.Erros.Add("deu erro 1");
+                viewModel.ErrosApi.Erros.Add("deu erro 2");
+                viewModel.ErrosApi.Erros.Add("deu erro 3");
+                viewModel.ErrosApi.Erros.Add("deu erro 4");
+                viewModel.ErrosApi.Erros.Add("deu erro 5");
+
+                TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+
+                return RedirectToAction(nameof(Create), viewModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Create), viewModel);
             }
         }
 

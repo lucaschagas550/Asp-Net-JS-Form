@@ -17,7 +17,7 @@
 <h1>@ViewData["Title"] </h1>
 
 <!--Formualrio de envio-->
-<form asp-action="Create" method="post" onsubmit="clearSearchAndSubmit()">
+<form asp-action="Create" method="post" onsubmit="clearSearchAndSubmit()" id="mainForm">
 
     <div class="accordion mt-5" id="accordionExample">
 
@@ -38,17 +38,21 @@
         <input name="Lojas[@i].Numero" value="@Model.Lojas[i].Numero" class="readonly-input-center" hidden="hidden" />
     }
 
-
-    <div class="row mt-5">
-        <div class="col-sm-12 text-center">
-            <button type="submit" class="btn btn-success">Salvar</button>
-            <button type="submit" class="btn btn-danger">Salvar</button>
-            <button type="submit" class="btn btn-warning">Salvar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-    </div>
-
 </form>
+
+<div class="row mt-5">
+    <div class="col-sm-12 text-center">
+
+        <button id="btnSaveCreate" class="btn btn-success">Salvar (Create)</button>
+        <button id="btnSaveUpdate" class="btn btn-danger">Salvar (Update)</button>
+        <button id="btnSaveDelete" class="btn btn-warning">Salvar (Delete)</button>
+
+        @* <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="submit" class="btn btn-danger">Salvar</button>
+        <button type="submit" class="btn btn-warning">Salvar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button> *@
+    </div>
+</div>
 
 
 
@@ -62,6 +66,7 @@
     <script src="~/js/Pedido/pedidoModalInserir.js"></script>
     <script src="~/js/Pedido/pedidoModalEditar.js"></script>
     <script src="~/js/Pedido/pedidoModalRemover.js"></script>
+    <script src="~/js/Pedido/pedidoFooterBtns.js"></script>
 
     @*O razor so consegue pegar valores da Model para armazena em variavel se estiver no mesmo arquivo*@
     <script type="text/javascript">
