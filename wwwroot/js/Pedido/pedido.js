@@ -68,6 +68,7 @@ function formatDateToDDMMYYYY(dateString) {
 
 //Limpa o search do DATATABLES antes do envio, para que todos os registros sejam enviados
 function clearSearchAndSubmit() {
+    console.log("Limpar");
     var table = $("#tabelaItens").DataTable(); // Obtém a instância do DataTables
     table.search("").draw(); // Limpa o campo de pesquisa e redesenha a tabela
 
