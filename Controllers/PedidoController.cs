@@ -1,5 +1,7 @@
-﻿using Forms.ViewModels;
+﻿using Forms.Models;
+using Forms.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Forms.Controllers
 {
@@ -15,6 +17,7 @@ namespace Forms.Controllers
         public IActionResult Create()
         {
             var pedidos = CriarPedidos();
+            CriarViewBag(pedidos);
             return View(pedidos);
         }
 
@@ -34,6 +37,8 @@ namespace Forms.Controllers
                 viewModel.ErrosApi.Erros.Add("deu erro 5");
 
                 TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+               
+                CriarViewBag(viewModel);
 
                 return View(viewModel);
             }
@@ -58,6 +63,8 @@ namespace Forms.Controllers
                 viewModel.ErrosApi.Erros.Add("deu erro 5");
 
                 TempData["ListaErrosApi"] = viewModel.ErrosApi.Erros;
+
+                CriarViewBag(viewModel);
 
                 return RedirectToAction(nameof(Create), viewModel);
             }
@@ -85,6 +92,7 @@ namespace Forms.Controllers
                         Preco = 10.0m,
                         Data = DateTime.Now,
                         Desconto= false,
+                        PaisId = 1,
                     },
                     new ItemViewModel
                     {
@@ -93,6 +101,7 @@ namespace Forms.Controllers
                         Preco = 20.05m,
                         Data = DateTime.Now.AddDays(25),
                         Desconto= true,
+                        PaisId = 2,
                     },
                                        new ItemViewModel
                     {
@@ -101,6 +110,7 @@ namespace Forms.Controllers
                         Preco = 65.65m,
                         Data = DateTime.Now.AddDays(2),
                         Desconto = false,
+                        PaisId = 3,
                     },
                 },
                 Lojas = new List<LojasDisponiveisViewModel>
@@ -110,6 +120,25 @@ namespace Forms.Controllers
                     new LojasDisponiveisViewModel("Loja 3","00000-002", 777),
                 }
             };
+        }
+
+        public void CriarViewBag(PedidoViewModel pedidoViewModel)
+        {
+            var paises = new List<PaisViewModel>() {
+                new PaisViewModel(1,"Brasil"),
+                new PaisViewModel(2,"Argentina"),
+                new PaisViewModel(3,"Chile"),
+                new PaisViewModel(4,"Paragui"),
+                new PaisViewModel(5,"Uruguai")
+            };
+
+            ViewBag.Paises = new SelectList(paises,"Id","Nome");
+
+            foreach(var item in pedidoViewModel.Itens)
+            {
+                item.ItemValueSelectList = new SelectList(paises, "Id", "Nome", item.PaisId);
+                item.ItemTextSelectList = new SelectList(paises, "Id", "Nome", paises.FirstOrDefault(p => p.Id == item.PaisId)?.Nome);
+            }
         }
     }
 }

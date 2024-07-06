@@ -5,6 +5,8 @@
 
     //Btn de add novo item na tabela
     $('#saveItemButton').click(function () {
+        var valorPaisSelecionado = $('#itemPais').val();
+        var textoPaisSelecionado = $('#itemPais option:selected').text();
         var descricao = $('#itemDescricao').val();
         var quantidade = $('#itemQuantidade').val();
         var preco = $('#itemPreco').val();
@@ -94,6 +96,7 @@
                 '<div class="preco"> R$ ' + preco + '</div><input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden"/>',
                 '<div class="data">' + displayData + '</div><input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden"/>',
                 '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i><input name="Itens[' + index + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + '/>',
+                '<div class="pais">' + textoPaisSelecionado + '</div><input name="Itens[' + index + '].PaisId" class="readonly-input-center" value="' + valorPaisSelecionado + '" hidden="hidden"/>',
                 '<div><button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button><button type="button" class="btn btn-danger mb-2" onclick="confirmDelete(this)">Remover</button></div>'
             ];
 

@@ -15,7 +15,14 @@ $(document).ready(function () {
         var quantidade = $('#editItemQuantidade').val();
         var preco = $('#editItemPreco').val();
         var data = $('#editItemData').val();
+
+        //Para CheckBox
         var desconto = $('#editItemDesconto').is(':checked');
+
+        //Para SelectList
+        var valorPaisSelecionado = $('#editItemPais').val();
+        var textoPaisSelecionado = $('#editItemPais option:selected').text();
+
         var displayData = '';
 
         var isValid = true;
@@ -46,51 +53,26 @@ $(document).ready(function () {
         }
 
         if (isValid) {
-            var row = $('#itens-table tr').eq(editingRowIndex);
+            var table = $('#tabelaItens').DataTable();
 
-            //Valida se tem valor na data se nao tiver apenas nao mostra nada
             if (data) {
-                // Formatação da data no formato dd/MM/yyyy
                 displayData = formatDateToDDMMYYYY(data);
             }
 
-            //Atualiza os valores para os campos inputs que serao enviados para a controller
-            row.find('input[name$=".Descricao"]').val(descricao);
-            row.find('input[name$=".Quantidade"]').val(quantidade);
-            row.find('input[name$=".Preco"]').val(preco);
-            row.find('input[name$=".Data"]').val(data);
-            var checkbox = row.find('input[name$=".Desconto"]');
+            var descontoIconClass = desconto ? 'bi bi-check-circle' : 'bi bi-x-circle';
 
-            if (checkbox.length > 0) {
-                checkbox.prop('checked', desconto);
-                checkbox.val(desconto ? 'true' : 'false'); // Atualiza o valor do checkbox baseado no estado
+            var updatedRow = [
+                '<div class="descricao">' + descricao + '</div><input name="Itens[' + editingRowIndex + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>',
+                '<div class="quantidade">' + quantidade + '</div><input name="Itens[' + editingRowIndex + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden"/>',
+                '<div class="preco"> R$ ' + preco + '</div><input type="text" name="Itens[' + editingRowIndex + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden"/>',
+                '<div class="data">' + displayData + '</div><input name="Itens[' + editingRowIndex + '].Data" type="date" class="readonly-input-center no-calendar" value="' + data + '" hidden="hidden"/>',
+                '<i class="fs-5 desconto-icon ' + descontoIconClass + '"></i><input name="Itens[' + editingRowIndex + '].Desconto" type="checkbox" class="readonly-input checkbox-desconto" hidden="hidden" value="' + (desconto ? 'true' : 'false') + '" ' + (desconto ? 'checked' : '') + '/>',
+                '<div class="pais">' + textoPaisSelecionado + '</div><input name="Itens[' + editingRowIndex + '].PaisId" class="readonly-input-center" value="' + valorPaisSelecionado + '" hidden="hidden"/>',
+                '<div><button type="button" class="btn btn-warning me-2 mb-2" onclick="editItem(this)">Editar</button><button type="button" class="btn btn-danger mb-2" onclick="confirmDelete(this)">Remover</button></div>'
+            ];
 
-                var icon = row.find('.desconto-icon');
-                if (desconto) {
-                    icon.removeClass('bi-x-circle').addClass('bi-check-circle');
-                } else {
-                    icon.removeClass('bi-check-circle').addClass('bi-x-circle');
-                }
-            }
-
-            // Atualiza os valores nas divs visíveis na tabela
-            row.find('div.descricao').text(descricao);
-            row.find('div.quantidade').text(quantidade);
-            row.find('div.preco').text('R$ ' + preco);
-            row.find('div.data').text(displayData);
-
-            // Fechar o modal e remover o fundo ofuscado da edicao
-            // $('#editItemModal').modal('hide').on('hidden.bs.modal', function () {
-            //     $('body').removeClass('modal-open');
-            //     $('.modal-backdrop').remove();
-            // });
-
-
-            // Obter a instância do DataTables
-            var table = $('#tabelaItens').DataTable();
-
-            // Atualiza a tabela DataTables
-            table.row(editingRowIndex).invalidate().draw(); //SOMENTE SE TIVER DATATABLES
+            //ATUALIZA A LINHA DA TABELA
+            table.row(editingRowIndex).data(updatedRow).invalidate().draw(false);
 
             // Fechar o modal e remover o fundo ofuscado da confirmacao da edicao
             $('#editConfirmacao').modal('hide').on('hidden.bs.modal', function () {
@@ -121,6 +103,7 @@ function editItem(button) {
 
     $('#editItemPreco').val(precoFormatado);
     $('#editItemData').val(row.find('input[name$=".Data"]').val());
+    $('#editItemPais').val(row.find('input[name$=".PaisId"]').val());
 
     var checkbox = row.find('input[name$=".Desconto"]');
     if (checkbox.length > 0) {

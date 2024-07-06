@@ -9,6 +9,17 @@
             <div class="modal-body">
 
                 <div class="form-group">
+                    <label for="editItemPais">Pais</label>
+                    <select class="form-select"
+                            id="editItemPais"
+                            data-placeholder="Selecione"
+                            asp-items="@ViewBag.Paises"
+                            name="selectedCountries">
+                        <option value="" disabled>Selecione</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="editItemDescricao">Descrição</label>
                     <input type="text" class="form-control" id="editItemDescricao" />
                     <div class="text-danger" id="editItemDescricaoError" style="display:none;"></div>
