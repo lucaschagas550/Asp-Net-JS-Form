@@ -1,17 +1,6 @@
-//Alterar a action do form conforme o botao que eh ativo
-document.getElementById('btnSaveCreate').addEventListener('click', function () {
-    console.log('salvar');
-    submitForm('/Pedido/Create');
-});
-
-document.getElementById('btnSaveUpdate').addEventListener('click', function () {
-    console.log('update');
-    submitForm('/Pedido/update');
-});
-
-document.getElementById('btnSaveDelete').addEventListener('click', function () {
-    submitForm('/Pedido/Delete');
-});
+function submitForm() {
+    limparSearchDaTabela();
+}
 
 function limparSearchDaTabela() {
     console.log("Limpar");
@@ -22,10 +11,4 @@ function limparSearchDaTabela() {
     $('#spinner').modal('show');
 
     return true; // Permite que o formulário seja submetido
-}
-
-function submitForm(actionUrl) {
-    limparSearchDaTabela();
-    document.getElementById('mainForm').action = actionUrl;
-    document.getElementById('mainForm').submit();
 }

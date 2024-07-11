@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Forms.Controllers
 {
-    [Route("[controller]")]
     public class PedidoController : Controller
     {
         public PedidoController()

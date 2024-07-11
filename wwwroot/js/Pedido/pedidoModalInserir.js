@@ -41,7 +41,7 @@
         }
 
         if (isValid) {
-            var index = $('#itens-table tr').length;
+            var index = $('#tabelaItens').DataTable().rows().count();
             var formattedData = null;
             var displayData = '';
 
@@ -88,7 +88,7 @@
 
             //$('#itens-table').append(row); //SOMENTE
 
-
+            console.log("index => " + index);
             // Montagem da nova linha para a tabela COM DATATABLES, tem que colocar todo conteudo do TD de uma unica linha
             var newRow = [
                 '<div class="descricao">' + descricao + '</div><input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>',
@@ -103,7 +103,7 @@
             console.log('ADD NOVA LINHA');
             // Adicionar a nova linha à tabela DataTables
             var table = $('#tabelaItens').DataTable();
-            table.row.add(newRow).draw(false); // False redesenha a tabela garantido que os valores aparecem
+            table.row.add(newRow).draw(false); // False redesenha a tabela garantindo que os valores aparecem
 
             // Fechar o modal
             $('#closeModalButton').click();

@@ -19,7 +19,7 @@
 <!--Formualrio de envio-->
 @* clearSearchAndSubmit() so precisa se o botao estiver dentro do form *@
 @* <form asp-action="Create" method="post" onsubmit="clearSearchAndSubmit()" id="mainForm"> *@
-<form asp-action="Create" method="post" id="mainForm">
+<form method="post" id="mainForm" onsubmit="submitForm()">
 
     <div class="accordion mt-5" id="accordionExample">
 
@@ -40,21 +40,23 @@
         <input name="Lojas[@i].Numero" value="@Model.Lojas[i].Numero" class="readonly-input-center" hidden="hidden" />
     }
 
+    <div class="row mt-5">
+        <div class="col-sm-12 text-center">
+
+            <button id="btnSaveCreate" class="btn btn-success" formaction="create">Salvar (Create)</button>
+            <button id="btnSaveUpdate" class="btn btn-danger" formaction="update">Salvar (Update)</button>
+            <button id="btnSaveDelete" class="btn btn-warning" formaction="">Salvar (Delete)</button>
+
+            @* <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" class="btn btn-danger">Salvar</button>
+            <button type="submit" class="btn btn-warning">Salvar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button> *@
+        </div>
+    </div>
+
 </form>
 
-<div class="row mt-5">
-    <div class="col-sm-12 text-center">
 
-        <button id="btnSaveCreate" class="btn btn-success">Salvar (Create)</button>
-        <button id="btnSaveUpdate" class="btn btn-danger">Salvar (Update)</button>
-        <button id="btnSaveDelete" class="btn btn-warning">Salvar (Delete)</button>
-
-        @* <button type="submit" class="btn btn-success">Salvar</button>
-        <button type="submit" class="btn btn-danger">Salvar</button>
-        <button type="submit" class="btn btn-warning">Salvar</button>
-        <button type="submit" class="btn btn-primary">Salvar</button> *@
-    </div>
-</div>
 
 
 
