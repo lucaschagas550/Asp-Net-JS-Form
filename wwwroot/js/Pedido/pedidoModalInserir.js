@@ -101,9 +101,14 @@
             ];
 
             console.log('ADD NOVA LINHA');
-            // Adicionar a nova linha à tabela DataTables
+            // Adicionar a nova linha à tabela DataTables seguindo a ordem, ou seja, sera a ultima
             var table = $('#tabelaItens').DataTable();
-            table.row.add(newRow).draw(false); // False redesenha a tabela garantindo que os valores aparecem
+            //table.row.add(newRow).draw(false); // False redesenha a tabela garantindo que os valores aparecem
+
+
+            var rowNode = table.row.add(newRow).draw(false).node();
+            // Mover a nova linha para o topo, ou seja, sempre eh a primeira linha da tabela
+            $(rowNode).prependTo('#tabelaItens tbody');
 
             // Fechar o modal
             $('#closeModalButton').click();
