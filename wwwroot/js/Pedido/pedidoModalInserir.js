@@ -42,6 +42,7 @@
 
         if (isValid) {
             var index = $('#tabelaItens').DataTable().rows().count();
+            console.log("index " + index);
             var formattedData = null;
             var displayData = '';
 
@@ -106,9 +107,26 @@
             //table.row.add(newRow).draw(false); // False redesenha a tabela garantindo que os valores aparecem
 
 
-            var rowNode = table.row.add(newRow).draw(false).node();
-            // Mover a nova linha para o topo, ou seja, sempre eh a primeira linha da tabela
-            $(rowNode).prependTo('#tabelaItens tbody');
+            //Sequencia para adicionar linha e deixar como 1 item da tabela
+            table.row.add(newRow).draw(false); // Adiciona a linha no final
+            // Pega os dados de todas as linhas da tabela
+            var rows = table.rows().data().toArray();
+            // Insere a nova linha no início do array de dados
+            rows.unshift(rows.pop());
+
+            // Redesenha a tabela com os dados atualizados
+            table.clear().rows.add(rows).draw(false);
+
+            //Atualiza o index no input para o envio a controller
+            table.rows().nodes().each(function (row, index) {
+                $(row).find('input').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\[\d+\]/, '[' + index + ']');
+                        $(this).attr('name', newName);
+                    }
+                });
+            });
 
             // Fechar o modal
             $('#closeModalButton').click();

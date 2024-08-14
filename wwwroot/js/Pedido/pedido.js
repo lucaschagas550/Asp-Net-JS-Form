@@ -45,6 +45,10 @@
             //Isso significa que a primeira coluna tem o índice 0, a segunda coluna tem o índice 1,
             //e assim por diante.O índice - 1 refere - se à última coluna da tabela, -2 à penúltima, e assim por diante.
         ],
+        createdRow: function (row, data, dataIndex) {
+            // Adiciona a classe 'minha-classe' a cada célula <td> da linha
+            $(row).find('td').addClass('max-width-450');
+        }
     });
 });
 

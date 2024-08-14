@@ -49,6 +49,30 @@ function removeItem() {
     }
 }
 
+
+
+//function updateIndices() {
+//    var table = $('#tabelaItens').DataTable();
+//    //var rows = table.rows().nodes(); // Pega todas as linhas da tabela como nodes
+
+//    var rows = table.rows().data().toArray();
+//    // Insere a nova linha no início do array de dados
+//    rows.unshift(rows.pop());
+//    // Redesenha a tabela com os dados atualizados
+//    table.clear().rows.add(rows).draw(false);
+
+//    // Itera sobre cada linha e atualiza o índice
+//    //$(rows).each(function (index) {
+//        // Supondo que o índice esteja na primeira coluna
+//        //$(this).find('td').eq(0);
+//    //});
+
+//    // Redesenha a tabela
+//    //table.draw(false);
+//}
+
+//PODE SER QUE AO REMOVER E INSERIR EM SEQUENCIA O INDICE SE PERCA, RECOMENDA UTILIZAR METODO ACIMA.
+//ISTO ACONTECE DE PERDE O INDICE, SE AO INSERIR VOCE QUER QUE O ITEM NOVO SEJA O PRIMEIRO ITEM DA TABELA E ASSIM POR DIANTE
 function updateIndices() {
     var table = $('#tabelaItens').DataTable();
     table.rows().nodes().each(function (row, index) {

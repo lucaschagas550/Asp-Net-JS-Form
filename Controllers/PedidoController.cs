@@ -27,7 +27,7 @@ namespace Forms.Controllers
         {
             try
             {
-                await Task.Delay(5000).ConfigureAwait(false);
+                //await Task.Delay(5000).ConfigureAwait(false);
 
                 viewModel.ErrosApi.Erros.Add("deu erro 1");
                 viewModel.ErrosApi.Erros.Add("deu erro 2");
