@@ -35,6 +35,7 @@
                 previous: "Anterior",
             },
         },
+        pageLength: 3, // Define o número de itens por página
         autoWidth: false, // Desativa o ajuste automático de largura das colunas
         order: [], // Desativa a ordenação inicial, assim todo item adiciona vai para o fim da tabela
         columnDefs: [

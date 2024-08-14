@@ -41,7 +41,8 @@
         }
 
         if (isValid) {
-            var index = $('#tabelaItens').DataTable().rows().count();
+            var table = $('#tabelaItens').DataTable();
+            var index = table.rows().nodes().length; // Conta o número total de linhas visíveis na tabela (ou seja, as linhas que ainda estão presentes no DOM)
             console.log("index " + index);
             var formattedData = null;
             var displayData = '';
@@ -103,7 +104,7 @@
 
             console.log('ADD NOVA LINHA');
             // Adicionar a nova linha à tabela DataTables seguindo a ordem, ou seja, sera a ultima
-            var table = $('#tabelaItens').DataTable();
+            //var table = $('#tabelaItens').DataTable();
             //table.row.add(newRow).draw(false); // False redesenha a tabela garantindo que os valores aparecem
 
 
