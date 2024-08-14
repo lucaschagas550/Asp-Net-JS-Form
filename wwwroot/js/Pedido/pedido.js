@@ -39,8 +39,11 @@
         order: [], // Desativa a ordenação inicial, assim todo item adiciona vai para o fim da tabela
         columnDefs: [
             { orderable: false, targets: -1 }, // Desativa a ordenação na última coluna
-            { orderable: false, targets: 4 }, // Desativa a ordenação na coluna numero 4 (contagem inicia do 0)
+            { orderable: false, targets: 3 }, // Desativa a ordenação na coluna numero 4 (contagem inicia do 0)
             { searchable: false, targets: [2] }, // Desativa a busca em outras colunas específicas, lembrando que inicia-se a contagem da primeira coluna no indice 0
+            {
+                targets: 0, "className": "d-none", // Aplica a classe CSS para esconder a coluna e conseguir recuperar o valor ainda
+            },
             //No DataTables, as colunas são identificadas por um índice baseado em zero (zero-based index).
             //Isso significa que a primeira coluna tem o índice 0, a segunda coluna tem o índice 1,
             //e assim por diante.O índice - 1 refere - se à última coluna da tabela, -2 à penúltima, e assim por diante.

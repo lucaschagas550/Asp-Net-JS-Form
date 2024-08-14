@@ -46,8 +46,9 @@
                         {
                             @*""Itens"" porque na model eh referente a lista, assim existe o mapeamento*@
                             <tr>
+                                <!--Coluna escondida mas eh possivel recuperar seu valor, definicao feita no arquivo pedido.js da tabela do dataTables-->
                                 <td class="max-width-450">
-                                    <div class="descricao">@Model.Itens[i].Descricao</div>
+                                    @*<div class="descricao">@Model.Itens[i].Descricao</div> *@
                                     <input name="Itens[@i].Descricao" value="@Model.Itens[i].Descricao" class="readonly-input-center" hidden="hidden" />
                                 </td>
                                 <td class="max-width-450">

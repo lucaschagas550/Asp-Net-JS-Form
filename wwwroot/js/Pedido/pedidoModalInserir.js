@@ -92,7 +92,7 @@
             console.log("index => " + index);
             // Montagem da nova linha para a tabela COM DATATABLES, tem que colocar todo conteudo do TD de uma unica linha
             var newRow = [
-                '<div class="descricao">' + descricao + '</div><input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>',
+                '<input name="Itens[' + index + '].Descricao" class="readonly-input-center" value="' + descricao + '" hidden="hidden"/>',
                 '<div class="quantidade">' + quantidade + '</div><input name="Itens[' + index + '].Quantidade" class="readonly-input-center" value="' + quantidade + '" hidden="hidden"/>',
                 '<div class="preco"> R$ ' + preco + '</div><input type="text" name="Itens[' + index + '].Preco" class="readonly-input" value="' + preco + '" hidden="hidden"/>',
                 '<div class="data">' + displayData + '</div><input name="Itens[' + index + '].Data" type="date" class="readonly-input-center no-calendar" value="' + formattedData + '" hidden="hidden"/>',

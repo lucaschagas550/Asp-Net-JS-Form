@@ -16,6 +16,11 @@
             $(this).prop('checked', false);
         });
 
+        // Desmarcar radio buttons
+        $modal.find('input[type="radio"]').each(function () {
+            $(this).prop('checked', false);
+        });
+
         // Redefinir campos de data
         $modal.find('input[type="date"]').each(function () {
             $(this).val('');
