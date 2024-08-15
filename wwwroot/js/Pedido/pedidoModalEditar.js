@@ -87,10 +87,13 @@ $(document).ready(function () {
 
 //Btn de Editar, chamado ao clicar no botao da tabela para editar
 function editItem(button) {
-    var row = $(button).closest('tr');
-    editingRowIndex = row.index();
 
-    console.log(valorDaViewModel);
+    var row = $(button).closest('tr');
+
+    //Atualizar o item mesmo com paginacao na tabela
+    var table = $('#itens-table').closest('table').DataTable();
+    var tableIndex = table.row(row).index();
+    editingRowIndex = tableIndex;
 
     //Pega o item da linha que tem o name terminando com .* (Alguma coisa exemplo .Data, .Preco, .Quantidade, .Desconto)
     $('#editItemDescricao').val(row.find('input[name$=".Descricao"]').val());
