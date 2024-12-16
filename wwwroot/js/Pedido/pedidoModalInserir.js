@@ -118,6 +118,7 @@
             // Redesenha a tabela com os dados atualizados
             table.clear().rows.add(rows).draw(false);
 
+            //Ordena a coluna de QUANTIDADE de forma asc apos inserir o item, mantendo assim a ordenacao mesmo apos a inclusao de novo item
             table.order([1, 'asc']).draw();
 
             //Atualiza o index no input para o envio a controller
