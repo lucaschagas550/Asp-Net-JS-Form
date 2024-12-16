@@ -118,6 +118,8 @@
             // Redesenha a tabela com os dados atualizados
             table.clear().rows.add(rows).draw(false);
 
+            table.order([1, 'asc']).draw();
+
             //Atualiza o index no input para o envio a controller
             table.rows().nodes().each(function (row, index) {
                 $(row).find('input').each(function () {
