@@ -74,6 +74,16 @@ $(document).ready(function () {
             //ATUALIZA A LINHA DA TABELA
             table.row(editingRowIndex).data(updatedRow).invalidate().draw(false);
 
+            var rows = table.rows().data().toArray();
+            // Insere a nova linha no início do array de dados
+            rows.unshift(rows.pop());
+
+            // Redesenha a tabela com os dados atualizados
+            table.clear().rows.add(rows).draw(false);
+
+            //Ordena a coluna de QUANTIDADE de forma asc apos inserir o item, mantendo assim a ordenacao mesmo apos a inclusao de novo item
+            table.order([1, 'asc']).draw();
+
             // Fechar o modal e remover o fundo ofuscado da confirmacao da edicao
             $('#editConfirmacao').modal('hide').on('hidden.bs.modal', function () {
                 $('body').removeClass('modal-open');
